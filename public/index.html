@@ -3,60 +3,8 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css" />
     <title>Dusty Blog</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f4f4f4;
-      }
-      .container {
-        width: 80%;
-        margin: auto;
-        overflow: hidden;
-      }
-      header {
-        background: #333;
-        color: #fff;
-        padding-top: 30px;
-        min-height: 70px;
-        border-bottom: #77aaff 3px solid;
-      }
-      header a {
-        color: #fff;
-        text-decoration: none;
-        text-transform: uppercase;
-        font-size: 16px;
-      }
-      header ul {
-        padding: 0;
-        list-style: none;
-      }
-      header li {
-        float: left;
-        display: inline;
-        padding: 0 20px 0 20px;
-      }
-      .main {
-        padding: 20px;
-        background: #fff;
-        margin-top: 20px;
-      }
-      .post {
-        margin-bottom: 20px;
-      }
-      .post h2 {
-        margin: 0;
-        padding-bottom: 10px;
-      }
-      .post p {
-        line-height: 1.6em;
-      }
-      .new-post {
-        margin-top: 20px;
-      }
-    </style>
   </head>
   <body>
     <header>
@@ -64,9 +12,9 @@
         <h1>Dusty Blog</h1>
         <nav>
           <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
           </ul>
         </nav>
       </div>
@@ -81,7 +29,7 @@
             <input type="text" id="title" name="title"><br><br>
             <label for="content">Content:</label><br>
             <textarea id="content" name="content" rows="4" cols="50"></textarea><br><br>
-            <input type="submit" value="Add Post">
+            <input class="btn" type="submit" value="Add Post">
           </form>
         </div>
       </div>
