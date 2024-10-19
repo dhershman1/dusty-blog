@@ -1,0 +1,21 @@
+{
+  "name": "dusty-blog",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "A simple blog app that probably won't get much love as I'm building it to practice.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Dustin Hershman <dustinh17@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.0.1"
+  },
+  "devDependencies": {
+    "standard": "^17.1.2"
+  }
+}
