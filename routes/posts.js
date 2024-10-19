@@ -16,7 +16,7 @@ router.get('/:postId', (req, res) => {
   }
 })
 
-router.get('/', (req, res) => {
+router.get('/', (_, res) => {
   const results = []
 
   // Convert Map to array of objects
