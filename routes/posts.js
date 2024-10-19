@@ -17,7 +17,21 @@ router.get('/:postId', (req, res) => {
 })
 
 router.get('/', (req, res) => {
-  res.json(Array.from(posts.values()))
+  const results = []
+
+  // Convert Map to array of objects
+  // And add the id to the object
+  for (const [key, value] of posts) {
+    results.push({ id: key, ...value })
+  }
+
+  res.json(results)
+})
+
+router.delete('/:postId', (req, res) => {
+  posts.delete(req.params.postId)
+
+  res.sendFile('post-deleted.html', { root: './public' })
 })
 
 router.post('/', (req, res) => {
