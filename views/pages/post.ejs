@@ -19,7 +19,7 @@
     <%- include('../partials/footer') %>
     <script>
       function onDelete (postId) {
-        fetch('http://localhost:3000/posts/' + postId, {
+        fetch('/posts/' + postId, {
           method: 'DELETE',
           headers: {
             'Accept': 'application/json',
@@ -39,7 +39,7 @@
         const parts = window.location.href.split('/')
         const postId = parts[parts.length - 1]
         if (postId) {
-          fetch(`http://localhost:3000/posts/${postId}`, {
+          fetch(`/posts/${postId}`, {
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json'

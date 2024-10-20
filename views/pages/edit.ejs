@@ -30,7 +30,7 @@
   <script>
     function onEdit (event) {
       event.preventDefault()
-      fetch('http://localhost:3000/posts/' + post.id, {
+      fetch('/posts/' + post.id, {
         method: 'PUT',
         headers: {
           'Accept': 'application/json',
