@@ -8,7 +8,12 @@ router.get('/posts', async (req, res) => {
   const offset = (page - 1) * limit
 
   const [posts, totalPosts] = await Promise.all([
-    req.db('posts').select().where('created_by', req.session.userId).limit(limit).offset(offset),
+    req.db('posts')
+      .select()
+      .where('created_by', req.session.userId)
+      .orderBy('created_at', 'desc')
+      .limit(limit)
+      .offset(offset),
     req.db('posts').where('created_by', req.session.userId).count('id as count').first()
   ])
 
