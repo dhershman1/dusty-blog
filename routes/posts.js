@@ -10,7 +10,7 @@ router.get('/:postId', async (req, res) => {
   } else if (foundPost) {
     res.render('pages/post', { post: foundPost, user: req.session.user, userId: req.session.userId })
   } else {
-    res.status(404).send('Post not found')
+    res.status(404).render('pages/not-found', { user: req.session.user })
   }
 })
 
@@ -30,7 +30,7 @@ router.delete('/:postId', async (req, res) => {
     res.render('pages/post-deleted', { user: req.session.user, title: record[0].title })
   } catch (error) {
     console.error(error)
-    res.status(401).send('Unauthorized')
+    res.status(401).render('pages/unauthorized', { user: req.session.user })
   }
 })
 
@@ -47,7 +47,7 @@ router.put('/:postId', async (req, res) => {
     res.render('pages/post', { post: foundPost, user: req.session.user, userId: req.session.userId })
   } catch (error) {
     console.error(error)
-    res.status(401).send('Unauthorized')
+    res.status(401).render('pages/unauthorized', { user: req.session.user })
   }
 })
 

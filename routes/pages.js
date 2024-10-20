@@ -30,10 +30,14 @@ router.get('/login', (req, res) => {
 router.get('/edit/:postId', async (req, res) => {
   const foundPost = await req.db('posts').select().where('id', req.params.postId).first()
 
+  if (!foundPost) {
+    return res.status(404).render('pages/not-found', { user: req.session.user })
+  }
+
   if (req.session.userId === foundPost.created_by) {
     res.render('pages/edit', { post: foundPost, user: req.session.user, userId: req.session.userId })
   } else {
-    res.status(401).send('Unauthorized')
+    res.status(401).render('pages/unauthorized', { user: req.session.user })
   }
 })
 
