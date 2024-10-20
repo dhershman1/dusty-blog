@@ -138,3 +138,42 @@ p {
 footer {
   text-align: center;
 }
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #121212;
+    color: #e0e0e0;
+  }
+
+  header {
+    background: #1f1f1f;
+    border-bottom: #444 3px solid;
+  }
+
+  .main {
+    background: #1e1e1e;
+  }
+
+  .post {
+    background: #1e1e1e;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+  }
+
+  .container.centered {
+    background: #1e1e1e;
+    border: 1px solid #444;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+  }
+
+  h1 {
+    color: #7af;
+  }
+
+  p {
+    color: #e0e0e0;
+  }
+
+  footer {
+    color: #e0e0e0;
+  }
+}
