@@ -26,17 +26,26 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }))
-app.use(db({
-  client: 'pg',
-  searchPath: ['public'],
-  connection: {
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    user: process.env.DB_USER,
-    database: process.env.DB,
-    password: process.env.DB_PASS
-  }
-}))
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(db({
+    client: 'pg',
+    connection: process.env.DATABASE_URL,
+    searchPath: ['dusty_blog', 'public']
+  }))
+} else {
+  app.use(db({
+    client: 'pg',
+    searchPath: ['public'],
+    connection: {
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT,
+      user: process.env.DB_USER,
+      database: process.env.DB,
+      password: process.env.DB_PASS
+    }
+  }))
+}
 
 app.use('/posts', postsRouter)
 app.use('/users', userRouter)
