@@ -31,7 +31,7 @@
         <span class="count">
           Page <%= pagination.currentPage %> of <%= pagination.lastPage %>
         </span>
-        <% if (posts.length === 5) { %>
+        <% if (posts.length === 5 && pagination.currentPage !== pagination.lastPage) { %>
           <button class="btn" onclick="changePage(<%= pagination.currentPage + 1 %>)">Next Page</button>
         <% } %>
       </section>
