@@ -2,40 +2,36 @@ import express from 'express'
 
 const router = express.Router()
 
-// Internal DB that resets on server restart
-const posts = new Map()
-let idx = 1
+router.get('/:postId', async (req, res) => {
+  const foundPost = await req.db('posts').select().where('id', req.params.postId).first()
 
-router.get('/:postId', (req, res) => {
   if (req.headers['content-type'] === 'application/json') {
-    res.json(posts.get(req.params.postId))
-  } else if (posts.has(req.params.postId)) {
+    res.json(foundPost)
+  } else if (foundPost) {
     res.sendFile('post.html', { root: './public' })
   } else {
     res.status(404).send('Post not found')
   }
 })
 
-router.get('/', (_, res) => {
-  const results = []
+router.get('/', async (req, res) => {
+  const posts = await req.db('posts').select()
 
-  // Convert Map to array of objects
-  // And add the id to the object
-  for (const [key, value] of posts) {
-    results.push({ id: key, ...value })
-  }
-
-  res.json(results)
+  res.json(posts)
 })
 
 router.delete('/:postId', (req, res) => {
-  posts.delete(req.params.postId)
+  req.db('posts').delete(req.params.postId)
 
   res.sendFile('post-deleted.html', { root: './public' })
 })
 
-router.post('/', (req, res) => {
-  posts.set(String(idx++), req.body)
+router.post('/', async (req, res) => {
+  await req.db('posts').insert({
+    title: req.body.title,
+    content: req.body.content,
+    author: req.body.author || 'Anonymous'
+  })
 
   res.sendFile('index.html', { root: './public' })
 })

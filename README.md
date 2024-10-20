@@ -3,6 +3,8 @@ A simple blog app that probably won't get much love as I'm building it to practi
 
 ## How To
 
+You'll need to setup a .env file for your database connection
+
 - Clone the repo
 - `cd` into the cloned repo directory
 - Run `npm i`
