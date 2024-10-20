@@ -1,5 +1,5 @@
 import express from 'express'
-import { format } from 'date-fns'
+import { format, formatDistanceToNow } from 'date-fns'
 import { marked } from 'marked'
 import DOMPurify from 'isomorphic-dompurify'
 
@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
   const data = posts.map(post => {
     return {
       ...post,
-      created_at: format(post.created_at, 'MMMM dd, yyyy')
+      created_at: formatDistanceToNow(post.created_at, { addSuffix: true })
     }
   })
 
