@@ -18,7 +18,14 @@
       <section class="container">
         <div id="main" class="main">
           <div class="new-post">
-            <h2>Add New Post</h2>
+            <% if (user) { %>
+            <h2>Welcome <%= user %>!</h2>
+            <% } %>
+            <h2>Add a New Post</h2>
+            <% if (!user) { %>
+              <p>You need to be logged in to add a new post.</p>
+              <a href="/login" class="btn">Login</a>
+            <% } else { %>
             <form method="post" action="/posts">
               <label for="title">Title:</label><br>
               <input type="text" id="title" name="title"><br><br>
@@ -26,6 +33,7 @@
               <textarea id="content" name="content" rows="4" cols="50"></textarea><br><br>
               <input class="btn" type="submit" value="Add Post">
             </form>
+            <% } %>
           </div>
         </div>
       </section>
@@ -51,8 +59,9 @@
               const postElement = document.createElement('article')
               postElement.classList.add('post')
               postElement.innerHTML = `
-                <h2><a href="http://localhost:3000/posts/${post.id}" target="_blank">${post.title}</a></h2>
+                <h2><a href="http://localhost:3000/posts/${post.id}">${post.title}</a></h2>
                 <p>${post.content}</p>
+                <p>By ${post.author}</p>
               `
               document.querySelector('#articles').appendChild(postElement)
             })
