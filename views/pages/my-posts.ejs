@@ -24,6 +24,7 @@
           <% }) %>
         </ul>
       <% } %>
+      <% if (pagination.lastPage > 0) { %>
       <section class="pagination">
         <% if (pagination.currentPage > 1) { %>
           <button class="btn" onclick="changePage(<%= pagination.currentPage - 1 %>)">Previous Page</button>
@@ -35,6 +36,7 @@
           <button class="btn" onclick="changePage(<%= pagination.currentPage + 1 %>)">Next Page</button>
         <% } %>
       </section>
+      <% } %>
     </div>
     <%- include('../partials/footer') %>
     <script>
