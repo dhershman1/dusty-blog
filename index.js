@@ -7,6 +7,7 @@ import 'dotenv/config'
 import postsRouter from './routes/posts.js'
 import pageRouter from './routes/pages.js'
 import userRouter from './routes/users.js'
+import myRouter from './routes/my.js'
 
 // Middleware
 import db from './middleware/db.js'
@@ -39,6 +40,7 @@ app.use(db({
 
 app.use('/posts', postsRouter)
 app.use('/users', userRouter)
+app.use('/my', myRouter)
 app.use(pageRouter)
 
 app.get('/', (req, res) => {
