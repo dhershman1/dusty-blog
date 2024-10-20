@@ -9,7 +9,7 @@
   <body>
     <%- include('../partials/header') %>
     <h1>Register</h1>
-    <form action="/users/register" method="post">
+    <form id="registerForm">
       <label for="username">Username:</label>
       <input type="text" id="username" name="username" required>
       <br>
@@ -19,6 +19,34 @@
       <br>
       <button class="btn" type="submit">Sign Up</button>
     </form>
+    <div id="error-message" style="color: red;"></div>
     <%- include('../partials/footer') %>
+    <script>
+      function onRegister (event) {
+        event.preventDefault()
+        const username = document.getElementById('username').value
+        const password = document.getElementById('password').value
+        fetch('http://localhost:3000/users/register', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            username,
+            password
+          })
+        }).then(response => {
+          if (response.ok) {
+            window.location.href = '/login'
+          }
+
+          return response.json()
+        }).then(json => {
+          document.getElementById('error-message').innerText = json.error
+        })
+      }
+      document.getElementById('registerForm').addEventListener('submit', onRegister)
+    </script>
   </body>
 </html>
