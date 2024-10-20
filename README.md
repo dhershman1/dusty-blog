@@ -39,4 +39,5 @@ You'll need to setup a .env file for your database connection
 - Make login stick across instances (making session work with redis will probably fix this)
 - Add ability to like posts
 - Create automated DB deploy script
+- Create Permissions/Roles for admins
 - And much more!
