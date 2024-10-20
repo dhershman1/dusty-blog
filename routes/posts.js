@@ -1,4 +1,5 @@
 import express from 'express'
+import { format } from 'date-fns'
 
 const router = express.Router()
 
@@ -15,9 +16,15 @@ router.get('/:postId', async (req, res) => {
 })
 
 router.get('/', async (req, res) => {
-  const posts = await req.db('posts').select()
+  const posts = await req.db('posts').select().orderBy('created_at', 'desc').limit(5)
+  const data = posts.map(post => {
+    return {
+      ...post,
+      created_at: format(post.created_at, 'MMMM dd, yyyy')
+    }
+  })
 
-  res.json(posts)
+  res.json(data)
 })
 
 router.delete('/:postId', async (req, res) => {

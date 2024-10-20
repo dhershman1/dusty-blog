@@ -35,7 +35,10 @@
               const postElement = document.createElement('article')
               postElement.classList.add('post')
               postElement.innerHTML = `
-                <h2><a href="/posts/${post.id}">${post.title}</a></h2>
+                <h2>
+                  <a href="/posts/${post.id}">${post.title}</a>
+                  <span>(${post.created_at})</span>
+                </h2>
                 <p>${post.content}</p>
                 <p>By ${post.author}</p>
               `
