@@ -5,6 +5,16 @@ body {
   background-color: #f4f4f4;
 }
 
+.home-grid {
+  display: grid;
+  grid-template-columns: 70% 30%;
+  gap: 1rem;
+}
+
+.aside {
+  justify-content: flex-start;
+}
+
 .container {
   width: 80%;
   margin: auto;
