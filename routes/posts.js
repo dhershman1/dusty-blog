@@ -27,8 +27,6 @@ router.delete('/:postId', async (req, res) => {
       created_by: req.session.userId
     }).del(['title'])
 
-    console.log(record)
-
     res.render('pages/post-deleted', { user: req.session.user, title: record[0].title })
   } catch (error) {
     console.error(error)
