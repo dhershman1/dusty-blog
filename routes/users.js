@@ -11,7 +11,7 @@ router.post('/register', async (req, res) => {
     password: await bcrypt.hash(req.body.password, saltRounds)
   })
 
-  res.rediect('/')
+  res.redirect('/')
 })
 
 router.post('/login', async (req, res) => {
@@ -19,13 +19,15 @@ router.post('/login', async (req, res) => {
 
   if (foundUser && await bcrypt.compare(req.body.password, foundUser.password)) {
     req.session.user = foundUser.username
+    req.session.userId = foundUser.id
+    req.session.isAuthenticated = true
     res.redirect('/')
   } else {
     res.status(401).send('Invalid credentials')
   }
 })
 
-router.post('/logout', (req, res) => {
+router.get('/logout', (req, res) => {
   req.session.destroy()
 
   res.redirect('/')
