@@ -7,8 +7,9 @@ const router = express.Router()
 // Routes for user interactions like registering and logging in/out
 router.post('/register', async (req, res) => {
   const usernameRegex = /^[a-zA-Z0-9_-]+$/
-  // const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/
-  const easyPassword = /^.{8,}$/ // for testing purposes
+  const passwordRegex = process.env.NODE_ENV === 'production'
+    ? /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/
+    : /^.{8,}$/ // for testing purposes
   const { username, password } = req.body
 
   if (!usernameRegex.test(username)) {
@@ -17,7 +18,7 @@ router.post('/register', async (req, res) => {
     })
   }
 
-  if (!easyPassword.test(password)) {
+  if (!passwordRegex.test(password)) {
     return res.status(400).json({
       error: 'Invalid password. Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one digit, and one special character.'
     })
