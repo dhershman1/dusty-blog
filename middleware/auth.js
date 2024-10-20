@@ -6,7 +6,8 @@ const authMiddleware = (req, res, next) => {
     '/about',
     '/contact',
     '/posts',
-    '/users/login'
+    '/users/login',
+    '/users/register'
   ]
 
   if (openRoutes.includes(req.path) || (req.session && req.session.userId)) {
