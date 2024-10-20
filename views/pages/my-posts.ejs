@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css" />
+    <title>My Posts</title>
+  </head>
+  <body>
+    <%- include('../partials/header') %>
+    <div class="container main">
+      <h1>My Posts</h1>
+      <% if (posts.length === 0) { %>
+        <p>You have not made any posts yet.</p>
+      <% } else { %>
+        <ul class="no-dots" id="postsList">
+          <% posts.forEach(post => { %>
+            <li>
+              <h2><a href="/posts/<%= post.id %>"><%= post.title %></a></h2>
+              <p><%= post.content.substring(0, 100) %>...</p>
+              <a class="btn" href="/edit/<%= post.id %>">Edit</a>
+              <button class="btn is-danger" onclick="onDelete('<%= post.id %>')">Delete</button>
+            </li>
+          <% }) %>
+        </ul>
+      <% } %>
+      <section class="pagination">
+        <% if (pagination.currentPage > 1) { %>
+          <button class="btn" onclick="changePage(<%= pagination.currentPage - 1 %>)">Previous Page</button>
+        <% } %>
+        <span class="count">
+          Page <%= pagination.currentPage %> of <%= pagination.lastPage %>
+        </span>
+        <% if (posts.length === 5) { %>
+          <button class="btn" onclick="changePage(<%= pagination.currentPage + 1 %>)">Next Page</button>
+        <% } %>
+      </section>
+    </div>
+    <%- include('../partials/footer') %>
+    <script>
+      function onDelete(postId) {
+        fetch('http://localhost:3000/posts/' + postId, {
+          method: 'DELETE',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(response => {
+          if (response.ok) {
+            window.location.reload();
+          } else {
+            console.error('Error deleting post');
+          }
+        })
+        .catch(error => {
+          console.error('Error deleting post:', error);
+        });
+      }
+      function changePage (page) {
+        fetch('/my/posts?page=' + page, {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
+          .then(data => {
+            const postsList = document.getElementById('postsList')
+            postsList.innerHTML = ''
+            data.posts.forEach(post => {
+              const li = document.createElement('li');
+              li.innerHTML = `
+          <h2><a href="/posts/${post.id}">${post.title}</a></h2>
+          <p>${post.content.substring(0, 100)}...</p>
+          <a class="btn" href="/edit/${post.id}">Edit</a>
+          <button class="btn is-danger" onclick="onDelete('${post.id}')">Delete</button>
+        `
+              postsList.appendChild(li)
+            });
+
+            // Update pagination
+            const pagination = document.querySelector('.pagination')
+            pagination.querySelector('.count').textContent = `Page ${data.pagination.currentPage} of ${data.pagination.lastPage}`
+            pagination.querySelectorAll('button').forEach(button => button.remove())
+
+            if (data.pagination.currentPage > 1) {
+              const prevButton = document.createElement('button')
+              prevButton.className = 'btn'
+              prevButton.textContent = 'Previous Page'
+              prevButton.onclick = () => changePage(data.pagination.currentPage - 1)
+              pagination.insertBefore(prevButton, pagination.querySelector('.count'))
+            }
+
+            if (data.posts.length === 5) {
+              const nextButton = document.createElement('button')
+              nextButton.className = 'btn'
+              nextButton.textContent = 'Next Page'
+              nextButton.onclick = () => changePage(data.pagination.currentPage + 1)
+              pagination.appendChild(nextButton)
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error)
+          })
+        }
+    </script>
+  </body>
+</html>
