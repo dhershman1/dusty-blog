@@ -9,8 +9,11 @@ const authMiddleware = (req, res, next) => {
     '/users/login',
     '/users/register'
   ]
+  const isSingularPost = req.path.match(/^\/posts\/[0-9]+$/)
 
-  if (openRoutes.includes(req.path) || (req.session && req.session.userId)) {
+  if (isSingularPost ||
+      openRoutes.includes(req.path) ||
+      (req.session && req.session.userId)) {
     next()
   } else {
     res.status(401).render('pages/unauthorized', { user: req.session.user })
