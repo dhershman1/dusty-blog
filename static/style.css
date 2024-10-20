@@ -5,6 +5,10 @@ body {
   background-color: #f4f4f4;
 }
 
+.no-dots {
+  list-style-type: none;
+}
+
 .home-grid {
   display: grid;
   grid-template-columns: 70% 30%;
@@ -129,4 +133,8 @@ p {
 
 .is-danger:hover {
   background-color: #c9302c;
+}
+
+footer {
+  text-align: center;
 }
