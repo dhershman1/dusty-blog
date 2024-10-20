@@ -24,3 +24,16 @@ You'll need to setup a .env file for your database connection
   - Posts can be viewed
 - Full DB support
 - Posts support a title, content, and author
+
+## Ideas
+
+- Support Markdown for posts
+  - Then render that markdown for formatting
+- Create a new posts page instead of it sharing a page with recent posts
+- Add statistics to a users profile
+- View other users profiles
+- Setup Redis for express session
+- Add Filtering
+- Add tagging system
+- Add dates to posts
+- Make login stick across instances (making session work with redis will probably fix this)
