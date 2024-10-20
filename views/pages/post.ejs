@@ -11,7 +11,10 @@
     <div class="post">
       <h1 class="post-title" id="postTitle">Loading...</h1>
       <div class="post-content" id="postContent"></div>
-      <button class="btn" id="deleteBtn">Delete</button>
+      <% if (user && userId === post.created_by) { %>
+      <button class="btn is-danger" id="deleteBtn">Delete</button>
+      <a class="btn" id="editBtn" href="<%= `/edit/${post.id}` %>">Edit</a>
+      <% } %>
     </div>
     <%- include('../partials/footer') %>
     <script>
