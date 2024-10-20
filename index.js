@@ -11,6 +11,7 @@ import myRouter from './routes/my.js'
 
 // Middleware
 import db from './middleware/db.js'
+import auth from './middleware/auth.js'
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -26,6 +27,8 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }))
+
+app.use(auth)
 
 if (process.env.NODE_ENV === 'production') {
   app.use(db({
