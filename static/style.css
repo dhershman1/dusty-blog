@@ -111,6 +111,12 @@ p {
   font-size: 18px;
 }
 
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .btn {
   display: inline-block;
   margin-top: 20px;
