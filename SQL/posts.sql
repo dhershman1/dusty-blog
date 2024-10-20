@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS public.posts
     content text COLLATE pg_catalog."default",
     author varchar(255) COLLATE pg_catalog."default",
     created_by uuid,
-    created_at date DEFAULT now(),
+    created_at timestamp without time zone DEFAULT now(),
     CONSTRAINT posts_pkey PRIMARY KEY (id),
     CONSTRAINT posts_created_by_fkey FOREIGN KEY (created_by)
         REFERENCES public.users (id) MATCH SIMPLE
