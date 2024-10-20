@@ -1,18 +1,27 @@
 import express from 'express'
 import { format } from 'date-fns'
+import { marked } from 'marked'
+import DOMPurify from 'isomorphic-dompurify'
 
 const router = express.Router()
 
 router.get('/:postId', async (req, res) => {
   const foundPost = await req.db('posts').select().where('id', req.params.postId).first()
 
-  if (req.headers['content-type'] === 'application/json') {
-    res.json(foundPost)
-  } else if (foundPost) {
-    res.render('pages/post', { post: foundPost, user: req.session.user, userId: req.session.userId })
-  } else {
+  if (!foundPost) {
     res.status(404).render('pages/not-found', { user: req.session.user })
   }
+
+  if (foundPost) {
+    foundPost.content = DOMPurify.sanitize(marked.parse(foundPost.content))
+    foundPost.created_at = format(foundPost.created_at, 'MMMM dd, yyyy')
+  }
+
+  if (req.headers['content-type'] === 'application/json') {
+    return res.json(foundPost)
+  }
+
+  return res.render('pages/post', { post: foundPost, user: req.session.user, userId: req.session.userId })
 })
 
 router.get('/', async (req, res) => {
