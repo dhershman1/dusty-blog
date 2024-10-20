@@ -122,3 +122,11 @@ p {
 .btn:hover {
   background-color: #31b0d5;
 }
+
+.is-danger {
+  background-color: #d9534f;
+}
+
+.is-danger:hover {
+  background-color: #c9302c;
+}
