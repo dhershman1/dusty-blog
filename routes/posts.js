@@ -8,7 +8,7 @@ router.get('/:postId', async (req, res) => {
   if (req.headers['content-type'] === 'application/json') {
     res.json(foundPost)
   } else if (foundPost) {
-    res.sendFile('post.html', { root: './public' })
+    res.render('pages/post', { post: foundPost })
   } else {
     res.status(404).send('Post not found')
   }
@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
 router.delete('/:postId', (req, res) => {
   req.db('posts').delete(req.params.postId)
 
-  res.sendFile('post-deleted.html', { root: './public' })
+  res.render('pages/post-deleted')
 })
 
 router.post('/', async (req, res) => {
@@ -33,7 +33,7 @@ router.post('/', async (req, res) => {
     author: req.body.author || 'Anonymous'
   })
 
-  res.sendFile('index.html', { root: './public' })
+  res.render('pages/index')
 })
 
 export default router

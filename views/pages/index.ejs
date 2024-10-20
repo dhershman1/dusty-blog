@@ -7,18 +7,7 @@
     <title>Dusty Blog</title>
   </head>
   <body>
-    <header>
-      <div class="container">
-        <h1>Dusty Blog</h1>
-        <nav>
-          <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/contact">Contact</a></li>
-          </ul>
-        </nav>
-      </div>
-    </header>
+    <%- include('../partials/header') %>
     <div class="home-grid">
       <aside class="container aside">
         <div>
@@ -41,10 +30,7 @@
         </div>
       </section>
     </div>
-    <footer>
-      <div class="container">
-        <p>&copy; 2024 Dusty Blog. All rights reserved.</p>
-      </div>
+    <%- include('../partials/footer') %>
     <script>
       document.addEventListener('DOMContentLoaded', function () {
         fetch(`http://localhost:3000/posts`, {

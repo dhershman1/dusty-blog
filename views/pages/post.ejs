@@ -7,12 +7,13 @@
     <title>Blog Post</title>
   </head>
   <body>
+    <%- include('../partials/header') %>
     <div class="post">
       <h1 class="post-title" id="postTitle">Loading...</h1>
       <div class="post-content" id="postContent"></div>
       <button class="btn" id="deleteBtn">Delete</button>
     </div>
-
+    <%- include('../partials/footer') %>
     <script>
       function onDelete (postId) {
         fetch('http://localhost:3000/posts/' + postId, {

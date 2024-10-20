@@ -1,10 +1,12 @@
 import express from 'express'
 import cors from 'cors'
+import session from 'express-session'
 import 'dotenv/config'
 
 // Routes
 import postsRouter from './routes/posts.js'
 import pageRouter from './routes/pages.js'
+import userRouter from './routes/users.js'
 
 // Middleware
 import db from './middleware/db.js'
@@ -12,11 +14,17 @@ import db from './middleware/db.js'
 const app = express()
 const PORT = 3000
 
+app.set('view engine', 'ejs')
+
 app.use(express.urlencoded())
 app.use(express.json())
-app.use(cors())
 app.use(express.static('static'))
-
+app.use(cors())
+app.use(session({
+  secret: process.env.APP_SECRET,
+  resave: false,
+  saveUninitialized: true
+}))
 app.use(db({
   client: 'pg',
   searchPath: ['public'],
@@ -30,10 +38,11 @@ app.use(db({
 }))
 
 app.use('/posts', postsRouter)
+app.use('/users', userRouter)
 app.use(pageRouter)
 
 app.get('/', (_, res) => {
-  res.sendFile('index.html', { root: './public' })
+  res.render('pages/index')
 })
 
 app.listen(PORT, () => {
