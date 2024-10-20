@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css" />
+    <title>Edit Post</title>
+  </head>
+  <body>
+    <%- include('../partials/header') %>
+    <div class="container main">
+      <h1>Edit Post: <%= post.title %></h1>
+      <form>
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" value="<%= post.title %>" required>
+        <br><br>
+        <label for="content">Content:</label>
+        <br>
+        <textarea id="content" name="content" rows="10" cols="50" required><%= post.content %></textarea>
+        <br><br>
+        <button class="btn" id="editSubmit" type="submit">Save Changes</button>
+      </form>
+    </div>
+    <%- include('../partials/footer') %>
+  </body>
+  <script>
+    const stringifiedData = '<%- JSON.stringify(post) %>'
+    const post = JSON.parse(stringifiedData)
+  </script>
+  <script>
+    function onEdit (event) {
+      event.preventDefault()
+      fetch('http://localhost:3000/posts/' + post.id, {
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          title: document.getElementById('title').value,
+          content: document.getElementById('content').value
+        })
+      }).then(response => {
+        if (response.ok) {
+          window.location.href = '/posts/' + post.id
+        }
+      })
+    }
+
+    document.getElementById('editSubmit').addEventListener('click', onEdit)
+  </script>
+</html>
