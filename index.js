@@ -59,6 +59,11 @@ app.get('/', (req, res) => {
   res.render('pages/index', { user: req.session.user })
 })
 
+// Catch all route for 404s
+app.use((req, res) => {
+  res.status(404).render('pages/not-found', { user: req.session.user })
+})
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`)
 })
