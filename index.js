@@ -41,8 +41,8 @@ app.use('/posts', postsRouter)
 app.use('/users', userRouter)
 app.use(pageRouter)
 
-app.get('/', (_, res) => {
-  res.render('pages/index')
+app.get('/', (req, res) => {
+  res.render('pages/index', { user: req.session.user })
 })
 
 app.listen(PORT, () => {
