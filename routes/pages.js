@@ -41,4 +41,12 @@ router.get('/edit/:postId', async (req, res) => {
   }
 })
 
+router.get('/create', (req, res) => {
+  if (!req.session.user) {
+    return res.status(401).render('pages/unauthorized', { user: req.session.user })
+  }
+
+  res.render('pages/create', { user: req.session.user })
+})
+
 export default router
