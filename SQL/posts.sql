@@ -6,7 +6,17 @@ CREATE TABLE IF NOT EXISTS public.posts
     title varchar(255) COLLATE pg_catalog."default" NOT NULL,
     content text COLLATE pg_catalog."default",
     author varchar(255) COLLATE pg_catalog."default",
-    CONSTRAINT posts_pkey PRIMARY KEY (id)
-);
+    created_by uuid,
+    created_at date DEFAULT now(),
+    CONSTRAINT posts_pkey PRIMARY KEY (id),
+    CONSTRAINT posts_created_by_fkey FOREIGN KEY (created_by)
+        REFERENCES public.users (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
 
-CREATE INDEX posts_id ON public.posts (id);
+CREATE INDEX IF NOT EXISTS posts_id
+    ON public.posts USING btree
+    (id ASC NULLS LAST)
+    TABLESPACE pg_default;
