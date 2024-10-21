@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.1.2
+
+### Changed
+
+- Posts are now sanatized going into the db for both create and edit, not just when fetching them
+
+### Fixed
+
+- Fixed edit page not saving when html was included in the content
+
 ## 0.1.1
 
 ### Added
