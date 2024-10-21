@@ -57,7 +57,7 @@ router.put('/:postId', async (req, res) => {
       created_by: req.session.userId
     }).update({
       title: req.body.title,
-      content: req.body.content
+      content: DOMPurify.sanitize(req.body.content)
     }, ['title', 'content', 'author', 'created_by'])
 
     res.render('pages/post', { post: foundPost, user: req.session.user, userId: req.session.userId })
@@ -70,7 +70,7 @@ router.put('/:postId', async (req, res) => {
 router.post('/', async (req, res) => {
   await req.db('posts').insert({
     title: req.body.title,
-    content: req.body.content,
+    content: DOMPurify.sanitize(req.body.content),
     author: req.session.user || 'Anonymous',
     created_by: req.session.userId
   })
