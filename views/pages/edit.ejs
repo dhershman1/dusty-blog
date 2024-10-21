@@ -24,29 +24,29 @@
     <%- include('../partials/footer') %>
   </body>
   <script>
-    const stringifiedData = '<%- JSON.stringify(post) %>'
+    const stringifiedData = '<%- JSON.stringify({id: post.id}) %>'
     const post = JSON.parse(stringifiedData)
-  </script>
-  <script>
-    function onEdit (event) {
-      event.preventDefault()
-      fetch('/posts/' + post.id, {
-        method: 'PUT',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          title: document.getElementById('title').value,
-          content: document.getElementById('content').value
+    document.addEventListener('DOMContentLoaded', function () {
+      function onEdit (event) {
+        event.preventDefault()
+        fetch('/posts/' + post.id, {
+          method: 'PUT',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            title: document.getElementById('title').value,
+            content: document.getElementById('content').value
+          })
+        }).then(response => {
+          if (response.ok) {
+            window.location.href = '/posts/' + post.id
+          }
         })
-      }).then(response => {
-        if (response.ok) {
-          window.location.href = '/posts/' + post.id
-        }
-      })
-    }
+      }
 
-    document.getElementById('editSubmit').addEventListener('click', onEdit)
+      document.getElementById('editSubmit').addEventListener('click', onEdit)
+    })
   </script>
 </html>
